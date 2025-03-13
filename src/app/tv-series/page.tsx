@@ -5,17 +5,16 @@ import { useMovieStore } from '@/store/useMovieStore';
 import MovieList from '@/components/movie/MovieList';
 import { motion } from 'framer-motion';
 import { fadeInStagger } from '@/animations/fadeIn';
-import GenreFilter from '@/components/movie/GenreFilter';
-import HeroSection from '@/components/HeroSection';
-import Header from '@/components/layout/Header';
+import TVGenreFilter from '@/components/tv/TVGenreFilter';
+import BackButton from '@/components/ui/BackButton';
 
-export default function Home() {
-  const { fetchMovies, fetchGenres, loading, error, movies } = useMovieStore();
+export default function TVSeriesPage() {
+  const { tvSeries, fetchTVSeries, fetchTVGenres, loading, error } = useMovieStore();
 
   useEffect(() => {
-    fetchMovies();
-    fetchGenres();
-  }, [fetchMovies, fetchGenres]);
+    fetchTVSeries();
+    fetchTVGenres();
+  }, [fetchTVSeries, fetchTVGenres]);
 
   if (loading) return <div className="text-center py-10">Loading...</div>;
   if (error) return <div className="text-center py-10 text-red-500">{error}</div>;
@@ -27,9 +26,10 @@ export default function Home() {
       animate="visible"
       variants={fadeInStagger}
     >
-      <HeroSection />
-      <GenreFilter />
-      <MovieList movies={movies} />
+      <BackButton />
+      <h1 className="text-3xl font-bold mb-6">Popular TV Series</h1>
+      <TVGenreFilter />
+      <MovieList movies={tvSeries} />
     </motion.div>
   );
 }
